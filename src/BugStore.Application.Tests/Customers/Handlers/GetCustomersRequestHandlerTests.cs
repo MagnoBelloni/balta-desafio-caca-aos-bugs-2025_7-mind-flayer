@@ -3,6 +3,7 @@ using BugStore.Application.Customers.Handlers;
 using BugStore.Application.Customers.Requests;
 using BugStore.Domain.Entities;
 using BugStore.Domain.Interfaces.Repositories;
+using Castle.Core.Resource;
 using FluentAssertions;
 using Moq;
 using System.Linq.Expressions;
@@ -25,15 +26,24 @@ namespace BugStore.Application.Tests.Customers.Handlers
         [Fact]
         public async Task Handle_Should_ReturnEmpty_WhenNoCustomerFound()
         {
-            customerRepository.Setup(x => x.GetAllAsync(CancellationToken.None))
-                .ReturnsAsync([]);
+            var expectedCount = 3;
+
+            customerRepository.Setup(x => x.GetPagedAsync(
+               It.IsAny<Expression<Func<Customer, bool>>>(),
+               It.IsAny<int>(),
+               It.IsAny<int>(),
+               It.IsAny<Func<IQueryable<Customer>, IOrderedQueryable<Customer>>>(),
+               CancellationToken.None))
+               .ReturnsAsync(([], expectedCount));
 
             var request = fixture.Create<GetCustomersRequest>();
 
             var result = await handler.Handle(request, CancellationToken.None);
 
-            result.Customers.Should().NotBeNull();
-            result.Customers.Should().BeEmpty();
+            result.TotalCount.Should().Be(expectedCount);
+            result.Response.Should().NotBeNull();
+            result.Response.Customers.Should().NotBeNull();
+            result.Response.Customers.Should().BeEmpty();
         }
 
         [Fact]
@@ -42,15 +52,22 @@ namespace BugStore.Application.Tests.Customers.Handlers
             var expectedCount = 3;
             var customer = fixture.CreateMany<Customer>(expectedCount);
 
-            customerRepository.Setup(x => x.GetAllAsync(It.IsAny<Expression<Func<Customer, bool>>>(),CancellationToken.None))
-                .ReturnsAsync(customer);
+            customerRepository.Setup(x => x.GetPagedAsync(
+                It.IsAny<Expression<Func<Customer, bool>>>(),
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                It.IsAny<Func<IQueryable<Customer>, IOrderedQueryable<Customer>>>(),
+                CancellationToken.None))
+                .ReturnsAsync((customer, expectedCount));
 
             var request = fixture.Create<GetCustomersRequest>();
 
             var result = await handler.Handle(request, CancellationToken.None);
 
-            result.Customers.Should().NotBeNull();
-            result.Customers.Should().HaveCount(expectedCount);
+            result.TotalCount.Should().Be(expectedCount);
+            result.Response.Should().NotBeNull();
+            result.Response.Customers.Should().NotBeNull();
+            result.Response.Customers.Should().HaveCount(expectedCount);
         }
     }
 }
