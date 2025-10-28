@@ -10,7 +10,7 @@ namespace BugStore.Domain.Tests.Entities
 
         public OrderLineTests()
         {
-            
+
             fixture = new Fixture();
         }
 

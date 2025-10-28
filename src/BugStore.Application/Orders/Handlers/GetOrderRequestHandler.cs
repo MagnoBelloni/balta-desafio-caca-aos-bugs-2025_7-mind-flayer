@@ -59,7 +59,7 @@ public class GetOrderRequestHandler(IOrderRepository orderRepository) : IRequest
 
         if (request.ProductPriceStart is not null)
             filter = filter.And(x => x.Lines!.Any(l => l.Product!.Price >= request.ProductPriceStart));
-        
+
         if (request.ProductPriceEnd is not null)
             filter = filter.And(x => x.Lines!.Any(l => l.Product!.Price <= request.ProductPriceEnd));
 

@@ -9,7 +9,7 @@ namespace BugStore.Api.Controllers
         {
             var group = app.MapGroup("/v1/orders");
 
-            
+
             group.MapGet("/", async ([AsParameters] GetOrderRequest request, IMediator mediator) =>
             {
                 var result = await mediator.Send(request);

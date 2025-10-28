@@ -32,15 +32,12 @@ namespace BugStore.Infrastructure.Data.Repositories
         {
             IQueryable<T> query = _dbSet
                 .AsExpandableEFCore()
-                .AsNoTracking();
-
-            if (filter != null)
-                query = query.Where(filter);
+                .AsNoTracking()
+                .Where(filter);
 
             var totalCount = await query.CountAsync(cancellationToken);
 
-            if (orderBy != null)
-                query = orderBy(query);
+            query = orderBy(query);
 
             var items = await query
                 .Skip((page - 1) * pageSize)
@@ -50,20 +47,21 @@ namespace BugStore.Infrastructure.Data.Repositories
             return (items, totalCount);
         }
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken) => await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
+        public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken)
+            => await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
 
         public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
-        {
-            return await _dbSet
+            => await _dbSet
                 .AsExpandableEFCore()
                 .AsNoTracking()
                 .Where(predicate)
                 .ToListAsync(cancellationToken);
-        }
 
-        public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken) => await _dbSet.FindAsync([id, cancellationToken], cancellationToken: cancellationToken);
+        public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+            => await _dbSet.FindAsync([id, cancellationToken], cancellationToken: cancellationToken);
 
-        public virtual async Task<T?> GetByIdAsNoTrackingAsync(Guid id, CancellationToken cancellationToken) => await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        public virtual async Task<T?> GetByIdAsNoTrackingAsync(Guid id, CancellationToken cancellationToken)
+            => await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public virtual async Task AddAsync(T entity, CancellationToken cancellationToken)
         {

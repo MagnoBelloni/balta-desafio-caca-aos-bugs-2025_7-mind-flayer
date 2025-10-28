@@ -3,7 +3,6 @@ using BugStore.Application.Customers.Handlers;
 using BugStore.Application.Customers.Requests;
 using BugStore.Domain.Entities;
 using BugStore.Domain.Interfaces.Repositories;
-using Castle.Core.Resource;
 using FluentAssertions;
 using Moq;
 using System.Linq.Expressions;

@@ -25,7 +25,7 @@ public class GetProductRequestHandler(IProductRepository productRepository) : IR
             OrderBy,
             cancellationToken);
 
-        return new PagedResponseDto<GetProductResponse>(GetProductResponse.FromProduct(products), page, pageSize, totalCount);      
+        return new PagedResponseDto<GetProductResponse>(GetProductResponse.FromProduct(products), page, pageSize, totalCount);
     }
 
     public static Expression<Func<Product, bool>> GetProductFilter(GetProductRequest request)

@@ -1,14 +1,22 @@
 ﻿using BugStore.Application.Reports.Requests;
-using BugStore.Application.Reports.Responses;
+using BugStore.Domain.Dtos;
+using BugStore.Domain.Interfaces.Repositories;
 using MediatR;
 
 namespace BugStore.Application.Reports.Handlers
 {
-    public class BestCustomerRequestHandler : IRequestHandler<BestCustomerRequest, BestCustomerResponse>
+    public class BestCustomerRequestHandler(ICustomerRepository customerRepository) : IRequestHandler<BestCustomerRequest, PagedResponseDto<IEnumerable<BestCustomerResponseDto>>>
     {
-        public Task<BestCustomerResponse> Handle(BestCustomerRequest request, CancellationToken cancellationToken)
+        public async Task<PagedResponseDto<IEnumerable<BestCustomerResponseDto>>> Handle(BestCustomerRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var (page, pageSize) = request.GetPageInfo();
+
+            var (pagedBestCustomers, totalCount) = await customerRepository.GetPagedBestCustomers(
+                page,
+                pageSize,
+                cancellationToken);
+
+            return new PagedResponseDto<IEnumerable<BestCustomerResponseDto>>(pagedBestCustomers, page, pageSize, totalCount);
         }
     }
 }

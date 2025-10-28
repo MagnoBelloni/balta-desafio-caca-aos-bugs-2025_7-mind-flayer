@@ -6,4 +6,6 @@ public class Customer : BaseEntity
     public required string Email { get; set; }
     public required string Phone { get; set; }
     public DateTime BirthDate { get; set; }
+
+    public IEnumerable<Order> Orders { get; set; } = [];
 }
