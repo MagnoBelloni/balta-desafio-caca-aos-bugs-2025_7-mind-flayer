@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11121.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugStore.Api", "BugStore.Api\BugStore.Api.csproj", "{BECA627D-92E9-47C2-BCDE-A108C35C8783}"
 EndProject
@@ -22,6 +22,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Infrastructure", "02. Infrastructure", "{4151115C-507D-4D22-86CB-5D7FBCE1C4ED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Application", "03. Application", "{1AE9CA4D-FAE8-4F00-96B6-7711601BAD2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B6D1F020-1F1F-4D8E-9840-0902DA0C0B05}"
+	ProjectSection(SolutionItems) = preProject
+		..\.verify = ..\.verify
+		..\.github\workflows\main.yaml = ..\.github\workflows\main.yaml
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,10 +130,10 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{387596AA-582A-4E0C-93D7-41D0715ECFC2} = {F5EC06C7-074F-4382-BFF1-6989A78AB782}
-		{7B3EA3A8-83BF-4AD6-B2D1-D32295E8A7DD} = {F5EC06C7-074F-4382-BFF1-6989A78AB782}
 		{2AF9B0C5-7104-485E-860E-2B6772B748AC} = {4151115C-507D-4D22-86CB-5D7FBCE1C4ED}
-		{1D8424C9-DBA2-420D-B702-21CFB8AF0F73} = {4151115C-507D-4D22-86CB-5D7FBCE1C4ED}
 		{ACE85E9F-3101-4539-8020-20E6DDAC5D06} = {1AE9CA4D-FAE8-4F00-96B6-7711601BAD2E}
+		{7B3EA3A8-83BF-4AD6-B2D1-D32295E8A7DD} = {F5EC06C7-074F-4382-BFF1-6989A78AB782}
+		{1D8424C9-DBA2-420D-B702-21CFB8AF0F73} = {4151115C-507D-4D22-86CB-5D7FBCE1C4ED}
 		{054968ED-93F3-434A-8744-1DBC33A6964F} = {1AE9CA4D-FAE8-4F00-96B6-7711601BAD2E}
 	EndGlobalSection
 EndGlobal

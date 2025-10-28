@@ -1,10 +1,9 @@
 namespace BugStore.Domain.Entities;
 
-public class Customer
+public class Customer : BaseEntity
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Email { get; set; }
-    public string Phone { get; set; }
+    public required string Name { get; set; }
+    public required string Email { get; set; }
+    public required string Phone { get; set; }
     public DateTime BirthDate { get; set; }
 }

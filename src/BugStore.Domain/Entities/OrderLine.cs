@@ -1,13 +1,24 @@
 namespace BugStore.Domain.Entities;
 
-public class OrderLine
+public class OrderLine : BaseEntity
 {
-    public Guid Id { get; set; }
+    public OrderLine()
+    {
+
+    }
+
+    public OrderLine(int quantity, Guid productId, Product product)
+    {
+        Quantity = quantity;
+        ProductId = productId;
+        Total = Quantity * product.Price;
+    }
+
     public Guid OrderId { get; set; }
-    
-    public int Quantity { get; set; }
-    public decimal Total { get; set; }
-    
-    public Guid ProductId { get; set; }
-    public Product Product { get; set; }
+
+    public int Quantity { get; private set; }
+    public decimal Total { get; private set; }
+
+    public Guid ProductId { get; private set; }
+    public Product? Product { get; private set; }
 }

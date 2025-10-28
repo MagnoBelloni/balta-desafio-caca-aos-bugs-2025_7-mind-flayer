@@ -6,8 +6,10 @@
         <Nullable>enable</Nullable>
         <OutputType>Exe</OutputType>
         <IsPackable>false</IsPackable>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
 
-        <!-- To enable Microsoft.Testing.Platform, uncomment the following line. -->
+		<!-- To enable Microsoft.Testing.Platform, uncomment the following line. -->
         <!-- <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner> -->
         <!-- Note: to use Microsoft.Testing.Platform correctly with dotnet test: -->
         <!-- 1. You must add dotnet.config specifying the test runner to be Microsoft.Testing.Platform -->
@@ -17,18 +19,25 @@
         <!-- https://learn.microsoft.comdotnet/core/testing/microsoft-testing-platform-extensions-code-coverage -->
     </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="AutoFixture" Version="4.18.1" />
+		<PackageReference Include="FluentAssertions" Version="8.8.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+		<PackageReference Include="Moq" Version="4.20.72" />
+		<PackageReference Include="xunit.v3" Version="3.0.0" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="3.1.3" />
+	</ItemGroup>
+
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1"/>
-        <PackageReference Include="xunit.v3" Version="3.0.0"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="3.1.3"/>
+        <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest"/>
+      <ProjectReference Include="..\BugStore.Domain\BugStore.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="Xunit"/>
+        <Using Include="Xunit" />
     </ItemGroup>
 
 </Project>
