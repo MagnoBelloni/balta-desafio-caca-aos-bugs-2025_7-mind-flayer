@@ -1,6 +1,6 @@
-﻿namespace BugStore.Domain.Dtos
+﻿namespace BugStore.Domain.Responses.Reports
 {
-    public class BestCustomerResponseDto
+    public class BestCustomerResponse
     {
         public string CustomerName { get; set; } = string.Empty;
         public string CustomerEmail { get; set; } = string.Empty;

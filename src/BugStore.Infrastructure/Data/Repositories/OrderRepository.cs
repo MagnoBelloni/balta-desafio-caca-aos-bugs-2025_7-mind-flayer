@@ -1,7 +1,13 @@
-﻿using BugStore.Domain.Entities;
+﻿using BugStore.Domain.Constants;
+using BugStore.Domain.Dtos.Reports;
+using BugStore.Domain.Entities;
+using BugStore.Domain.Helpers;
 using BugStore.Domain.Interfaces.Repositories;
+using BugStore.Domain.Responses.Reports;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace BugStore.Infrastructure.Data.Repositories
@@ -46,16 +52,21 @@ namespace BugStore.Infrastructure.Data.Repositories
             return (items, totalCount);
         }
 
-        public async Task<IEnumerable<Order>> GetPagedOrderAsNotrackingWithIncludesAsync(Expression<Func<Order, bool>> predicate, CancellationToken cancellationToken)
+        public async Task<RevenueByPeriodDto?> GetRevenueByPeriodAsync(int year, int month, CancellationToken cancellationToken)
         {
-            return await _dbSet
-                .AsExpandableEFCore()
+            var result = await _dbSet
                 .AsNoTracking()
-                .Include(x => x.Customer)
-                .Include(x => x.Lines)
-                .ThenInclude(x => x.Product)
-                .Where(predicate)
-                .ToListAsync(cancellationToken);
+                .Where(x => x.CreatedAt.Year == year && x.CreatedAt.Month == month)
+                .GroupBy(_ => 1)
+                .Select(c => new RevenueByPeriodDto
+                {
+                    TotalRevenue = c.Sum(x => x.TotalAmount),
+                    TotalOrders = c.Count(),
+                })
+                .OrderByDescending(x => x.TotalOrders)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return result;
         }
     }
 }

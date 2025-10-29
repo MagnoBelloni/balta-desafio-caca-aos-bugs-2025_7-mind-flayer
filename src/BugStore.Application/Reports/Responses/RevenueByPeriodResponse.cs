@@ -1,4 +1,4 @@
-﻿namespace BugStore.Application.Reports.Responses
+﻿namespace BugStore.Domain.Responses.Reports
 {
     public class RevenueByPeriodResponse
     {

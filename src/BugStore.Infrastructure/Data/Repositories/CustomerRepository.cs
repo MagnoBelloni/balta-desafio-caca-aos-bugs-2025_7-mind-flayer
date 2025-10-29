@@ -1,6 +1,6 @@
-﻿using BugStore.Domain.Dtos;
-using BugStore.Domain.Entities;
+﻿using BugStore.Domain.Entities;
 using BugStore.Domain.Interfaces.Repositories;
+using BugStore.Domain.Responses.Reports;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,12 +8,12 @@ namespace BugStore.Infrastructure.Data.Repositories
 {
     public class CustomerRepository(AppDbContext context) : BaseRepository<Customer>(context), ICustomerRepository
     {
-        public async Task<(IEnumerable<BestCustomerResponseDto> Items, int TotalCount)> GetPagedBestCustomers(int page, int pageSize, CancellationToken cancellationToken)
+        public async Task<(IEnumerable<BestCustomerResponse> Items, int TotalCount)> GetPagedBestCustomers(int page, int pageSize, CancellationToken cancellationToken)
         {
             var query = _dbSet
             .AsExpandableEFCore()
             .AsNoTracking()
-            .Select(c => new BestCustomerResponseDto
+            .Select(c => new BestCustomerResponse
             {
                 CustomerName = c.Name,
                 CustomerEmail = c.Email,
